@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>USCIS Case Status</title>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51868291-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51868291-2');
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<style>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans)
+
+@font-face {
+  font-family:"Helvetica Neue";
+  src: url("static/HelveticaNeue.ttf") format("truetype");
+}
+body{
+  background-image: url('static/back.jpg');
+  font-family: 'Helvetica Neue';
+}
+
+.search {
+  width: 100%;
+  position: relative
+}
+
+.searchTerm {
+  float: left;
+  width: 100%;
+  border: 3px solid #000;
+  padding: 18px;
+  height: 20px;
+  border-radius: 5px;
+  outline: none;
+  color: #9DBFAF;
+  font-size: 15px;
+}
+
+.searchTerm:focus{
+  color: #000;
+}
+
+.searchButton {
+  position: absolute;  
+  right: -40px;
+  width: 62px;
+  height: 62px;
+  border: 1px solid #000;
+  background: #000;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+#result {
+  text-align: center;
+  font-size: 2em;
+}
+
+.wrap{
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+  </style>
+<script type=text/javascript>
+$(document).ready(
+    function(){
+        $("#calculate").click(function () {
+            $("#result").hide();
+            $("#loader").show("slow");
+            $("#text").show("slow");
+        });
+
+    });
+
+  $(function() {
+    $('a#calculate').bind('click', function() {
+      $.getJSON('/_process', {
+        key: $('input[name="key"]').val()
+      }, function(data) {
+        $("#loader").hide("fast");
+        $("#text").hide("fast");
+        if(data.status == 1)
+        {
+          $("#result").text("Processed: " + data.processed + "\nProcessing: " + data.processing + "\nOther: " + data.other + "\n");
+          $("#result").append("<a href='/detailed'>View detailed info</a>");
+          $("#result").show();
+        }
+        else if(data.status == 0)
+        {
+          $("#result").text("Invalid USCIS Case ID");
+          $("#result").show(); 
+        }
+        else
+        {
+          $("#result").text("IP Banned by USCIS");
+          $("#result").show(); 
+        }
+      });
+      return false;
+    });
+  });
+</script>
+<link rel="shortcut icon" href="static/favicon.ico">
+</head>
+<body>
+<div class="wrap">
+  <h1>USCIS Case Status</h1><h4>Process numerous cases behind and in front of you to find out where you stand.</h4>
+   <div class="search">
+      <input type="text" class="searchTerm" placeholder="Enter USCIS Case ID" name=key required>
+      <a href=# id=calculate>
+      <button type="submit" class="searchButton">
+        <i class="fa fa-search"></i>
+      </button>
+      </a>
+       <div id='loader' align="center" style="display: none;"><img src="static/loading.gif"/></div>
+       <div id="text" align="center" style="display:none;text-align:center;">Patience. We're pinging USCIS.</div>
+       <div id="result" style="white-space: pre-wrap;"></div>
+   </div>
+</div>
+</body>
+<div class="footer">
+  <p>&copy; Shubham Chamaria: <a href="mailto:shubhamchamaria@gmail.com">shubhamchamaria@gmail.com</a>.</p>
+</div>
+</html>
