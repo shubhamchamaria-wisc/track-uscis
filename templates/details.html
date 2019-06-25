@@ -107,13 +107,11 @@ td {
       if(data !== null)
       {
         for (var i = 0; i < data.length; i++){
-          console.log("HELLO1");
           $('#cases').append('<tr><td>'+data[i][0]+'</td><td>'+data[i][1]+'</td></tr>');
         }
       }
       else
       {
-        console.log("HELLO2");
         $('#cases').append('<tr><td>No items</td><td>No items</td></tr>');
       }
     });
