@@ -104,10 +104,19 @@ td {
 <script type=text/javascript>
   $(function() {
     $.getJSON('/_more', {}, function(data) {
-      for (var i = 0; i < data.length; i++){
-        $('#cases').append('<tr><td>'+data[i][0]+'</td><td>'+data[i][1]+'</td></tr>');
+      if(data !== null)
+      {
+        for (var i = 0; i < data.length; i++){
+          console.log("HELLO1");
+          $('#cases').append('<tr><td>'+data[i][0]+'</td><td>'+data[i][1]+'</td></tr>');
+        }
       }
-      });
+      else
+      {
+        console.log("HELLO2");
+        $('#cases').append('<tr><td>No items</td><td>No items</td></tr>');
+      }
+    });
     });
 </script>
 <link rel="shortcut icon" href="static/favicon.ico">
