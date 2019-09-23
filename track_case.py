@@ -95,7 +95,6 @@ def main(caseId):
 		asyncio.set_event_loop(loop)
 		future = asyncio.ensure_future(parallel_post(token_list))
 		loop.run_until_complete(future)
-		print(ret_list)
 		return processed, processing, other, 1, ret_list
 	else:
 		return 0,0,0,0, ret_list
